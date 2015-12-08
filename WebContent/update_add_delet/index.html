@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>增删改</title>
+<link rel="stylesheet" type="text/css"
+	href="../jqueryUI/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../jqueryUI/themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../jqueryUI/themes/color.css">
+<script type="text/javascript" src="../jqueryUI/jquery.min.js"></script>
+<script type="text/javascript" src="../jqueryUI/jquery.easyui.min.js"></script>
+
+</head>
+<body>
+	<table id="dg" title="敏感词" class="easyui-datagrid"
+		style="width: 100%; height: 500px" url="getSensitiveWordList.st"
+		toolbar="#searchtb,#toolbar" pagination="true" rownumbers="true"
+		fitColumns="true" singleSelect="false">
+		<thead>
+			<tr>
+				<th name="ck" checkbox="true" width="50">First Name</th>
+				<th name="word" width="100">内容</th>
+				<th name="validcls" width="20">有效标志</th>
+			    <th name="insertUser" formatter="cellName" width="50">创建人姓名</th> 
+				<th name="inserttime" width="50">创建时间</th>
+				<th name="updateUser" formatter="cellName" width="50">修改人姓名</th> 				
+				<th name="updatetime" width="50">修改时间</th>
+			</tr>
+			<tr>
+				<td name="ck" checkbox="true" width="50">First Name</td>
+				<td name="word" width="100">haha</td>
+				<td name="validcls" width="20">1</td>
+			    <td name="insertUser" formatter="cellName" width="50">cdl</td> 
+				<td name="inserttime" width="50">2015-12-5</td>
+				<td name="updateUser" formatter="cellName" width="50">cdl</td> 				
+				<td name="updatetime" width="50">2015-12-5</td>
+			</tr>
+		</thead>
+	</table>
+</body>
+<div id="searchtb" style="padding: 2px 5px;">
+		<form id="searchForm" method="get">
+			内容: <input class="easyui-combobox" name="word" id="word" />
+			有效标志:
+			<select name="validcls" id="validcls" class="easyui-combobox" data-options="panelHeight:'auto'">
+				<option value=""></option>		
+				<option value="1">有效</option>		
+				<option value="0">无效</option>		
+			</select>
+			<a href="#" class="easyui-linkbutton" iconCls="icon-search"
+				onclick="loaddata()">Search</a>
+		</form>
+	</div>
+	<div id="toolbar">
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newSensitiveWord()">新增</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="modifySensitiveWord()">修改</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-no" plain="true" onclick="invalidSensitiveWord('0')">禁用</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" plain="true" onclick="invalidSensitiveWord('1')">启用</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="removeEntity4con('','removeSensitiveWord.st')">删除</a>
+	</div>
+	<div id="dlg" class="easyui-dialog" style="width: 680px; height: 580px; padding: 10px 20px;" closed="true" >
+		<div class="ftitle" >敏感词</div>
+		<form id="fm" method="post" enctype="multipart/form-data">
+			<table class="dataTable" border="0" align="center" cellpadding="5"
+				cellspacing="1">
+				<input name="id" id="id" type="hidden">
+				<tr>
+					<td class="titleTd"><label>内容:</label></td>
+                	<td><textarea name="word" class="easyui-textarea" required="true" rows="10" cols="60"></textarea></td>
+				</tr>
+				<tr>
+					<td class="titleTd"><label>类别:</label></td>
+					<td><select name="validcls" class="easyui-combobox" data-options="panelHeight:'auto'" required="true">
+							<option value="1">有效</option>		
+							<option value="0">无效</option>		
+						</select>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<div id="dlg-buttons">
+		<a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveSensitiveWord($('#fm'),$('#dlg'))" style="width: 90px">保存</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')"	style="width: 90px">取消</a>
+	</div>
+	</div>
+	
+<script type="text/javascript">
+var url;
+
+function newSensitiveWord() {
+	$('#dlg').dialog('open').dialog('center').dialog('setTitle', '新增敏感词');
+	$('#fm').form('clear');
+	url = 'addSensitiveWord.st';
+	
+}
+function modifySensitiveWord() {
+	var row = $('#dg' ).datagrid('getSelected');
+	
+	if (row) {
+		$('#dlg').dialog('open').dialog('center').dialog('setTitle','修改敏感词');
+		$('#fm').form('load', row);
+		url = 'modifySensitiveWord.st';
+	}
+	
+}
+function saveSensitiveWord(frm,dlg) {
+	frm.form('submit', {
+		url : url,
+		onSubmit : function() {
+			return $(this).form('validate');
+		},
+		success : function(result) {
+			var result = eval('(' + result + ')');
+			if (result.error){
+				$.messager.show({
+					title : 'Error',
+					msg : result.message
+				});
+			} else {
+				dlg.dialog('close'); // close the dialog
+				$('#dg').datagrid('reload'); // reload the user data
+			}
+		}
+	});
+}
+</script>
+<script type="text/javascript">
+		function invalidSensitiveWord(validcls){
+			var selRow = $('#dg').datagrid('getSelections') 
+	         if (selRow.length>0){
+	             $.messager.confirm('Confirm','确认要禁用/启用选定的敏感词吗?',function(r){
+	             	
+	                 if (r){
+	                 	
+	                 	var selRow = $('#dg').datagrid('getSelections');
+	                 	var temID="";  
+	                     //批量获取选中行的评估模板ID  
+	                     for (i = 0; i < selRow.length;i++) {  
+	                         if (temID =="") {  
+	                             temID = selRow[i].id;  
+	                         } else {  
+	                             temID = selRow[i].id + "," + temID;  
+	                         }                 
+	                     }  
+	                     $.post('validSensitiveWord.st',{id:temID,validcls:validcls},function(result){
+	                         if (result.success){
+	                         	
+	                        	 $('#dg').datagrid('reload');
+	                         } else {
+	                             $.messager.show({    // show error message
+	                                 title: 'Error',
+	                                 msg: result.message
+	                             });
+	                         }
+	                     },'json');
+	                 }
+	             });
+	         }
+		}
+		function loaddata() {
+			$('#dg').datagrid('load', {
+				word : $('#word').numberbox('getValue'),
+				validcls:$('#validcls').numberbox('getValue'),
+			});
+		}
+		
+	    function del(index){  
+	        $.messager.confirm('确认','确认删除?',function(row){
+	        	
+	            if(row){
+	                var selectedRow = $('#dg').datagrid('getSelected');
+	                
+	                $.ajax({  
+	                    url:'removeSensitiveWord.st?id='+selectedRow.id,    
+	                    success:function(){
+	                    	
+						}  
+	                });  
+	                $('#dg').datagrid('deleteRow',index);  
+	            }  
+	        })  
+		}  
+
+	 	removeEntity4con=function (entityName,action){
+
+			 var dg=$('#dg'+entityName);
+		     var selRow =dg.datagrid('getSelections') 
+		     if (selRow.length>0){
+		         $.messager.confirm('Confirm','确认要删除选定的记录吗?',function(r){
+		         	
+		             if (r){
+		             	
+		             	var selRow =dg.datagrid('getSelections');
+		             	var temID="";  
+		                 //批量获取选中行的id  
+		                 for (i = 0; i < selRow.length;i++) {  
+		                     if (temID =="") {  
+		                         temID = selRow[i].id;  
+		                     } else {  
+		                         temID = selRow[i].id + "," + temID;  
+		                     }                 
+		                 }  
+		                 $.post(action,{id:temID},function(result){
+		                     if (result.success){
+		                     	
+		                     	 for (i = 0; i < selRow.length;i++) {  
+		                     		 dg.datagrid('deleteRow',dg.datagrid('getRowIndex',selRow[i]));
+		                     	 }
+		                     	 
+		                     	 if(dg.datagrid('getRows').length==0){
+		                 			//dg.datagrid('reload');
+		                 		}
+		                     } else {
+		                         $.messager.show({    // show error message
+		                             title: 'Error',
+		                             msg: result.message
+		                         });
+		                     }
+		                 },'json');
+		             }
+		         	});
+		     	}
+		 	}
+		
+	</script>
+</html>
