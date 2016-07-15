@@ -1,0 +1,40 @@
+
+<html>
+<head>
+<title>登录</title>
+<link href="css/登录.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="js/登录.js"></script>
+
+</head>
+
+<body onLoad="init1();" style="background-color:#F7F7F7">
+<div style="position:absolute;left:2px;top:120px;" id="x">
+<img src="图片/advpic.gif" >
+<div style="position:absolute;left:168px;top:0px;" onClick="closeme()">
+<img src="图片/close.jpg" >
+</div>
+</div>
+
+<div class="bo">
+<div class="bo1"><img style="margin-left:360px;" src="图片/名字1.PNG" /><div style="margin-left:150px;"onclick="op_zc()"><a href="#">免费注册</a></div>
+<div class="bo2"><hr color="#0042B4" size="4"/></div>
+
+<div class="bo_table">
+<table border="0px" cellspacing="0" bordercolor="#ABABAB">
+<tr>
+<td class="td_left"><div style="float:right;"><div>请输入您的昵称:</div><div id="x1"><font color="red">*</font></div></div></td>
+<td width="560px"><div class="right1"><input type="text" name="p1" onMouseOut="this.style.borderColor='#66CCCC'" onMouseOver="this.style.borderColor='red'" onFocus="checkover(this.value,1)" onBlur="checkout(this.value,1)" /></div><div id="f1">您的昵称可以由小写英文字母，中文，数字组成，长度4-20个字符，一个汉字为两个字符</div></td>
+</tr>
+
+<td class="td_left"><div style="float:right;"><div>请输入密码:</div><div id="x2"><font color="red">*</font></div></div></td>
+<td width="560px"><div class="right1"><input type="password" name="p2" onMouseOut="this.style.borderColor='#66CCCC'" onMouseOver="this.style.borderColor='red'" onFocus="checkover(this.value,2)" onBlur="checkout(this.value,2)" /></div><div id="f2">您的密码可以由小写英文字母，数字组成，长度为6-20位。</div></td>
+</tr>
+<tr>
+<td colspan="2"><input type="button" value="登录" style="width:60px;height:30px;background:#D3EAF2; margin-left:280px;" onMouseOut="this.style.background='#D3EAF2'" onMouseOver="this.style.background='#0042B4'"onClick="ge(p1.value,p2.value)" /></td>
+</tr>
+</table>
+</div>
+<div class="top2_6"><div class="inp0"><input type="text" value="无用户登录" id="dl1"/></div><div class="inp0"><input type="text" value="1" id="dl2"/></div><div class="inp0"><input type="text" value="无用户登录" id="dl3"/></div><div class="inp0"><input type="text" value="无用户登录" id="dl4"/></div></div>
+</div>
+</body>
+</html>

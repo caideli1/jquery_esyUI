@@ -1,0 +1,62 @@
+<html>
+<head>
+<meta http-equiv="Content-Type"content="text/html; charset=UTF-8">
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.9.1/jquery.js"></script>
+</head>
+
+<body>
+<a class="click" href="#">测试</a>
+<input id="input" value="">
+</body>
+</html>
+
+<script type="text/javascript">
+$(function(){
+	$('.click').on("click",function(){
+		
+		alert("haha");
+		var a = "ERROR";
+		var data = {currPage:1, pageSize:4};
+		$.ajax({ 
+			url: "http://www.shchnet.com//android/G020603o.do", 
+			type:"Get",
+			dataType:"json",
+			/**data: data,*/
+			async: true,
+			success: function(data){
+				console.log(data);
+				var _html = "";
+				/*if( !data || !data.activityPrize ){
+					return false;
+				}*/
+				_html+= '<h1>'+ data.success+'</h1>';
+				$("#input").val(data);
+				$("body").append(_html);
+				
+				
+				/*a = data.activityPrize.id;*/
+			}
+		});
+		/**
+		$.ajax({ 
+			url: "http://www.shchnet.com//android/G020601o.do", 
+			type:"Get",
+			dataType:"json",
+			async: true,
+			success: function(data){
+				console.log(data);
+				var _html = "";
+				if( !data || !data.activityPrize ){
+					return false;
+				}
+				_html+= '<h1>'+ data.activityPrize.number+'</h1>';
+				_html+= '<h2>'+ data.activityPrize.desc+'</h2>';
+				$("body").append(_html);
+				a = data;
+			}
+		});*/
+		console.log(a);
+	});
+	
+});
+</script>

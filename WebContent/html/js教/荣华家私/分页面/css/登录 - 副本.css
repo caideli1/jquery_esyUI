@@ -1,0 +1,14 @@
+div{float:left;}
+input{border:1px solid #66CCCC;width:200px;height:20px;margin-top:10px;}
+td{height:40px;}
+.td_left{ background-color:#D3EAF2;width:200px;}
+#f1,#f2,#f3,#f4,#f5,#f6,#f7{width:323px;margin-left:10px;display:none;}
+.right1{height:40px;margin-left:10px;}
+.bo{ width:1000px; height:600px; margin-left:160px; background-color:white;}
+.bo1{width:1000px; background-color:white;}
+.bo2{width:1000px;margin-top:10px;}
+.bo_table{margin-left:120px;margin-top:50px;}
+.top2_6{margin-top:20px; width:200px;height:100px;margin-left:0px;float:left;}
+.inp0{margin-top:0px; width:195px;height:20px;margin-left:0px;float:left;}
+#dl1{width:190px;height:18px;background-color:#F7F7F7;border:0px;color:#E90E30;display:none;}
+#dl2,#dl3,#dl4{width:190px;height:18px;border:0px;display:none;}

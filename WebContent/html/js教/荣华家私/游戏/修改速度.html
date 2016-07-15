@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>修改速度</title>
+<script language="javascript">
+function bak(n){
+window.returnValue=n;
+window.close();
+}
+</script>
+</head>
+<body>
+<center>
+选关:<select name="s" value="请选择关卡" onchange="bak(this.value)">
+<option value="0">请选择关卡</option>
+<option value="1">第一关</option>
+<option value="2">第二关</option>
+<option value="3">第三关</option>
+</select>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html>
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.9.1/jquery.js"></script>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+<a class="click" href="#">调用数据</a>
+
+</body>
+</html>
+
+<script type="text/javascript">
+$(function(){
+	$('.click').on("click",function(){
+		alert("点击成功")
+		$.ajax({
+			url: "http://www.shchnet.com/android/getConversationList.do",
+			dataType: "json",
+			//jsonp: "callback",
+			async:false,//同步的意思默认为true
+			success: function(result){
+			//alert(result);
+			//var jsonText = JSON.stringify(result);
+			//result = eval('(' + result + ')'); //转为json对象
+			alert(result.data[1].information);
+			var data = result.data;
+				var _html = "";
+				if(!data){
+					return false;
+				}
+				var information = data[1].information;
+				var title = data[1].title;
+				_html+= '<h1>'+ information +'</h1>';
+				_html+= '<h1>'+ title +'</h1>';
+        _html+= '<h1>'+ data.telString+'</h1>';
+				$("body").append(_html);
+				call(data[1].information);
+			}
+		});
+	});
+});
+</script>

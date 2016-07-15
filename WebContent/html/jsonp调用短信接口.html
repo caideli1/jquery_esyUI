@@ -1,0 +1,80 @@
+<html>
+<script type="text/javascript" src="http://libs.useso.com/js/jquery/1.9.1/jquery.js"></script>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+<a class="click" href="#">短信调用</a>
+
+</body>
+</html>
+
+<script type="text/javascript">
+$(function(){
+  // $('.click').on("click",function(){
+  // $.ajax({
+  //           type: "get",
+  //           url: 'http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel='+tel,
+  //           dataType: "jsonp",
+  //           jsonp: "callback",
+  //           success: function(data){
+  //              console.log(data);
+  //             //  $('.error').css('display','none');
+  //             //  var province = data.province,
+  //             //      operators = data.catName,
+  //             //      num = data.telString;
+  //             //  $('.num span').html(num);
+  //             //  $('.province span').html(province);
+  //             //  $('.operators span').html(operators);
+  //
+  //             			var _html = "";
+  //             			if(!data){
+  //             				return false;
+  //             			}
+  //             			_html+= '<h1>'+ data.province+'</h1>';
+  //             			_html+= '<h1>'+ data.catName+'</h1>';
+  //                   _html+= '<h1>'+ data.telString+'</h1>';
+  //             			$("body").append(_html);
+  //                   a = data;
+  //           },
+  //           error:function (){
+  //              alert("出错！")
+  //           }
+  //       });
+  //       console.log(a);
+  //       });
+
+	$('.click').on("click",function(){
+
+		function load_val(call){
+			$.ajax({
+			url: "http://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=15850781443",
+      //url: "http://www.kuaidi100.com/applyurl?key=&com=&nu="
+      dataType: "jsonp",
+      jsonp: "callback",
+			async:false,
+			success: function(data){
+				console.log(data);
+				var _html = "";
+				if(!data){
+					return false;
+				}
+				_html+= '<h1>'+ data.province+'</h1>';
+				_html+= '<h1>'+ data.catName+'</h1>';
+        _html+= '<h1>'+ data.telString+'</h1>';
+				$("body").append(_html);
+				//personJson = data.province;
+				call(data.province);
+				//replaceImgSrc(data.province);
+			}
+		});
+	}
+
+		var data = load_val(function(data){
+			return data;
+		});
+		console.log(data);
+	});
+});
+</script>

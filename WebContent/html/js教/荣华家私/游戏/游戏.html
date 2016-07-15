@@ -1,0 +1,216 @@
+<html>
+<head>
+<title>游戏制作</title>
+<script language="javascript">
+
+
+var directLeft=3;//单位时间内太阳横向移动的距离
+var directTop=3;//单位时间内太阳纵向移动的距离
+var sunleft=0;//太阳横坐标
+var suntop=0;//太阳纵坐标
+var directP=10;//按一下方向键挡板移动的距离
+var palletleft;//挡板横坐标
+var pallettop;//挡板纵坐标
+var count=0;//控制“痛”和“爽”的出现消失
+var saytime;//控制“痛”和“爽”的出现消失
+var i=0;//控制上下撞的次数
+var j=0;//控制时间一分钟以内
+var o,p,q,t;
+var k=0;
+var m=0;
+
+
+function sunmove(){
+	sunleft+=directLeft;
+	suntop+=directTop;
+	sun.style.left=sunleft+'px';
+	sun.style.top=suntop+'px';
+if((sunleft+sun.offsetWidth)>document.body.clientWidth||sunleft<=0){
+	directLeft=-directLeft;
+}
+if((suntop+sun.offsetHeight)>document.body.clientHeight||suntop<=0){
+	i++;
+	directTop=-directTop;
+}
+if(i==3){
+m=0;
+if(j<60){
+alert("你真笨！");
+j=61;
+}else{
+i=0;
+j=0;
+}
+}
+ if(directTop<0){
+	if(palletleft+pallet.offsetWidth>sunleft&&palletleft<sunleft+sun.offsetWidth&&pallettop<=suntop+directP+pallet.offsetHeight
+	   &&pallettop>=suntop-directP+pallet.offsetHeight){
+		directTop=-directTop;
+		updown.style.left=sunleft+sun.offsetWidth+"px";
+		updown.style.top=pallettop+"px";
+		updown.style.display="block";
+}if(count==0){
+	saytime=window.setInterval("say()",15);
+
+}
+}
+   if(directTop>0){
+	if(palletleft+pallet.offsetWidth>sunleft&&palletleft<sunleft+sun.offsetWidth&&pallettop<=suntop+sun.offsetHeight+directP
+	   &&pallettop>=suntop-directP+sun.offsetHeight){
+		directTop=-directTop;
+		downup.style.left=sunleft+sun.offsetWidth+"px";
+		downup.style.top=suntop-sun.offsetHeight+"px";
+		downup.style.display="block";
+}if(count==0){
+	saytime=window.setInterval("say()",15);
+
+}
+}
+
+	
+}
+function say(){
+	count++;
+	if(count==50){
+	updown.style.display="none";
+	downup.style.display="none";
+	count=0;
+	clearInterval(saytime);	
+}
+}
+
+var suntime=window.setInterval("sunmove()",1);//太阳移动
+
+
+function init(){
+	palletleft=Math.round(document.body.clientWidth/2-pallet.offsetWidth/2);
+	pallettop=Math.round(document.body.clientHeight-pallet.offsetHeight);
+	pallet.style.left=palletleft+"px";
+	pallet.style.top=pallettop+"px";
+}//定位挡板
+
+
+document.onkeydown=keydown;
+
+
+function keydown(){
+	switch(event.keyCode){
+	case 37:palletleft-=directP;
+		if(palletleft>=0){
+		pallet.style.left=palletleft+"px";
+		}else{
+		palletleft+=directP;
+		}break;
+	case 39:palletleft+=directP;
+		if(palletleft+pallet.offsetWidth<document.body.clientWidth){
+		pallet.style.left=palletleft+"px";
+		}else{
+		palletleft-=directP;
+		}break;
+	case 38:pallettop-=directP;
+		if(pallettop>0){
+		pallet.style.top=pallettop+"px";
+		}else{
+		pallettop+=directP;
+		}break;
+	case 40:pallettop+=directP;
+		if(pallettop+pallet.offsetHeight<=document.body.clientHeight){
+		pallet.style.top=pallettop+"px";
+		}else{
+		pallettop-=directP;
+		}break;
+		}
+}//挡板移动
+
+
+function ks(){
+j=j+1;
+o=window.setTimeout("ks()",1000);
+}//控制时间
+
+
+
+
+function changebg(){
+		 k++;
+ 		 if(k==1){
+		 var z=document.getElementById("b");
+       		 z.style.backgroundImage="url('图片/太空.jpg')";
+}		 
+ 		 if(k==2){
+		var z=document.getElementById("b");
+       		 z.style.backgroundImage="url('图片/星空.jpg')";
+}		
+ 		 if(k==3){
+		 var z=document.getElementById("b");
+       		 z.style.backgroundImage="url('图片/晴空.jpg')";
+		 k=0;
+}		 
+p=window.setTimeout("changebg()",10000);
+}//控制时间	
+
+
+function nowtime(){
+var today=new Date(2013,10,29,0,0,0,m);
+m=m+10;
+t=today.getHours()+':'+today.getMinutes()+':'+today.getSeconds()+':'+today.getMilliseconds();
+tim.value=t;
+q=window.setTimeout("nowtime()",1);
+}
+
+
+function bck(b){
+if(b==1){
+		 directLeft=3;
+		 directTop=3;
+		 directP=10;
+}		 
+ 		 if(b==2){
+		 directLeft=4;
+		 directTop=4;
+		 directP=10;
+}		
+ 		 if(b==3){
+		 directLeft=6;
+		 directTop=6;
+		 directP=12;
+}		 
+} 
+
+
+function bak(a){
+if(a==1){
+		 var z=document.getElementById("b");
+       		 z.style.backgroundImage="url('图片/晴空.jpg')";
+}		 
+ 		 if(a==2){
+		var z=document.getElementById("b");
+       		 z.style.backgroundImage="url('图片/太空.jpg')";
+}		
+ 		 if(a==3){
+		 var z=document.getElementById("b");
+       		 z.style.backgroundImage="url('图片/星空.jpg')";
+}		 
+}
+</script>
+</head>
+<body id="b" onLoad="init();ks();changebg();nowtime();" background="图片/晴空.jpg">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;计时器<input style="text" name="tim">
+	选关:<select name="s1" value="请选择关卡" onChange="bck(this.value)">
+<option value="0">请选择关卡</option>
+<option value="1">第一关</option>
+<option value="2">第二关</option>
+<option value="3">第三关</option>
+</select>
+背景:<select name="s2" value="请选择背景" onChange="bak(this.value)">
+<option value="0">请选择背景</option>
+<option value="1">晴空</option>
+<option value="2">太空</option>
+<option value="3">星空</option>
+</select>
+	<img id="sun" src="图片/sun.gif" style="position:absolute;left:0px;top:0px;" />
+	<img id="pallet" src="图片/挡板.PNG" style="position:absolute;left:0px;top:0px;" />
+	<img id="updown" src="图片/痛.PNG" style="position:absolute;left:0px;top:0px;display:none;" />
+	<img id="downup" src="图片/爽.PNG" style="position:absolute;left:0px;top:0px;display:none;" />
+</body>
+</html>

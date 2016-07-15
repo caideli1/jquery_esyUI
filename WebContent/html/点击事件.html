@@ -1,0 +1,21 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jquery模拟鼠标点击事件-示例</title>
+<script type="text/javascript" src="http://www.daimajiayuan.com/templets/skins/js/jquery-1.8.1.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+$(function(){
+    $("#a").click(function(){
+        alert('当前鼠标点击对象的 id 值为：'+$(this).attr('id'));
+    });
+    $("#b").click(function(){
+        $("#a").trigger("click");//模拟执行id=a的事件
+    });
+});
+</script>
+</body>
+<div id="a" style="width:50px; height:50px; background-color:red;float:left;">红色</div>
+<div id="b" style="width:50px; height:50px; background-color:green;float:left;">绿色</div> 
+</html>
