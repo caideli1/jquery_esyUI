@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+        var kp = function(txt) {
+            var v = txt.value;
+            var reg = /^[a-zA-Z\d`~@#\$%\^&\*\(\)\-_=\+\[\]\{\}\\\|;\:'",<\.>\/\?]{0,20}$/;
+            var vv = v.replace(/[^\x00-\xff]/g, "aa");
+            if (!reg.test(vv)) {
+                txt.value = txt.pv ? txt.pv : "";
+            } else {
+                txt.pv = v;
+            }
+        }
+    </script>
+</head>
+<body>
+	 <input type="text" onkeyup="kp(this)" />
+</body>
+</html>
